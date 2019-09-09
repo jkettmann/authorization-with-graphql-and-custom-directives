@@ -1,6 +1,10 @@
 import { gql } from 'apollo-server';
 
 const typeDefs = gql`
+  directive @auth(
+    requires: Role!,
+  ) on FIELD_DEFINITION
+
   enum Role {
     ADMIN
     USER
@@ -8,6 +12,8 @@ const typeDefs = gql`
 
   type Message {
     id: ID
+    receiverId: ID
+    senderId: ID
     text: String
   }
 
@@ -16,12 +22,12 @@ const typeDefs = gql`
     firstName: String
     lastName: String
     email: String
-    role: Role
+    role: Role @auth(requires: ADMIN)
     message(id: ID!): Message
   }
 
   type Query {
-    currentUser: User
+    currentUser: User @auth(requires: USER)
   }
 `;
 

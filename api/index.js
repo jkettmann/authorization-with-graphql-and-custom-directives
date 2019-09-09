@@ -3,13 +3,17 @@ import User from './User';
 import Message from './Message';
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
+import AuhtDirective from './AuthDirective';
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  schemaDirectives: {
+    auth: AuhtDirective,
+  },
   context: ({ req }) => {
     const token = req.headers.authorization;
-    const currentUser = User.getUsers().find((user) => user.token === token);
+    const currentUser = User.getUserByToken(token);
     return { user: currentUser, User, Message }
   },
 });

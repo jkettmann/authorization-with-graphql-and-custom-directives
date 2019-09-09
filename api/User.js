@@ -16,9 +16,18 @@ const users = [
     email: 'roy@trenneman.com',
     password: 'imroy',
     role: 'ADMIN',
+  },
+  {
+    id: '3',
+    token: 'token-for-jen-barber',
+    firstName: 'Jen',
+    lastName: 'Barber',
+    email: 'jen@barber.com',
+    password: 'qwerty',
+    role: 'USER',
   }
 ];
 
 export default {
-  getUsers: () => users,
+  getUserByToken: (token) => users.find((user) => user.token === token),
 };
