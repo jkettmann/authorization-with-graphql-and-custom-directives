@@ -7,6 +7,7 @@ const typeDefs = gql`
 
   enum Role {
     ADMIN
+    OWNER
     USER
   }
 
@@ -23,7 +24,7 @@ const typeDefs = gql`
     lastName: String
     email: String
     role: Role @auth(requires: ADMIN)
-    message(id: ID!): Message
+    message(id: ID!): Message @auth(requires: OWNER)
   }
 
   type Query {
